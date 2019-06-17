@@ -1,165 +1,124 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "version": "1.0.0",
-      "title": "Yet Another Node.js Blogg Application API",
-      "description": "Yet Another Node.js Blogg Application API",
-      "license": {
-        "name": "MIT",
-        "url": "https://opensource.org/licenses/MIT"
-      }
+  "swagger": "2.0",
+  "info": {
+    "description": "API documentation for finding the name of the cities around the world.",
+    "version": "1.0.0",
+    "title": "City Search API document",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "akashjadhav20111995@gmail.com"
     },
-    "host": "localhost:3000",
-    "basePath": "/api/v1",
-    "tags": [
-      {
-        "name": "Users",
-        "description": "API for users in the system"
-      }
-    ],
-    "schemes": [
-      "http"
-    ],
-    "consumes": [
-      "application/json"
-    ],
-    "produces": [
-      "application/json"
-    ],
-    "paths": {
-      "/users": {
-        "post": {
-          "tags": [
-            "Users"
-          ],
-          "description": "Create new user in system",
-          "parameters": [
-            {
-              "name": "user",
-              "in": "body",
-              "description": "User that we want to create",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "200": {
-              "description": "New user is created",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          }
-        },
-        "get": {
-          "tags": [
-            "Users"
-          ],
-          "summary": "Get all users in system",
-          "responses": {
-            "200": {
-              "description": "OK",
-              "schema": {
-                "$ref": "#/definitions/Users"
-              }
-            }
-          }
-        }
-      },
-      "/users/{userId}": {
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "description": "ID of user that we want to find",
-            "type": "string"
-          }
-        ],
-        "get": {
-          "tags": [
-            "Users"
-          ],
-          "summary": "Get user with given ID",
-          "responses": {
-            "200": {
-              "description": "User is found",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          }
-        },
-        "delete": {
-          "summary": "Delete user with given ID",
-          "tags": [
-            "Users"
-          ],
-          "responses": {
-            "200": {
-              "description": "User is deleted",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          }
-        },
-        "put": {
-          "summary": "Update user with give ID",
-          "tags": [
-            "Users"
-          ],
-          "parameters": [
-            {
-              "name": "user",
-              "in": "body",
-              "description": "User with new values of properties",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "User is updated",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          }
-        }
-      }
-    },
-    "definitions": {
-      "User": {
-        "required": [
-          "email",
-          "_id"
-        ],
-        "properties": {
-          "_id": {
-            "type": "string",
-            "uniqueItems": true
-          },
-          "email": {
-            "type": "string",
-            "uniqueItems": true
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "firstName": {
-            "type": "string"
-          }
-        }
-      },
-      "Users": {
-        "type": "array",
-        "$ref": "#/definitions/User"
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "ec2-3-15-73-89.us-east-2.compute.amazonaws.com",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "suggestions",
+      "description": "Get the list of suggested cities",
+      "externalDocs": {
+        "description": "Find out more about our project on Github",
+        "url": "http://github.com/AkashJadhav-github"
       }
     }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/suggestions": {
+      "get": {
+        "summary": "Get the list of cities",
+        "description": "Get the list of cities around the world by using the search param",
+        "operationId": "getCity",
+        "tags": [
+          "suggestions"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Parameter to search for cities",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "latitude",
+            "in": "query",
+            "description": "Parameter to search city using Latitude and Longitude. In order to search cities using latitude and longitude both the parameters need to be input.",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "longitude",
+            "in": "query",
+            "description": "Parameter to search city using Latitude and Longitude. In order to search cities using latitude and longitude both the parameters need to be input.",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/Suggestion"
+              }
+            }
+          }
+        },
+        "externalDocs": {
+          "url": "http://api.example.com/docs/user-operations/",
+          "description": "Learn more about search operations provided by this API."
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Suggestion": {
+      "type": "object",
+      "properties": {
+        "q": {
+          "type": "string"
+        },
+        "latitude": {
+          "type": "integer"
+        },
+        "longitude": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "q"
+      ]
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "object"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
   }
+}
