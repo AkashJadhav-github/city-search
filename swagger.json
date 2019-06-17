@@ -26,7 +26,6 @@
     }
   ],
   "schemes": [
-    "https",
     "http"
   ],
   "paths": {
@@ -70,8 +69,30 @@
             "description": "OK",
             "schema": {
               "type": "object",
-              "items": {
-                "$ref": "#/definitions/Suggestion"
+              "properties": {
+                "code": {
+                  "type": "integer"
+                },
+                "suggestions": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "latitude": {
+                        "type": "number"
+                      },
+                      "longitude": {
+                        "type": "number"
+                      },
+                      "userscore": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -84,23 +105,6 @@
     }
   },
   "definitions": {
-    "Suggestion": {
-      "type": "object",
-      "properties": {
-        "q": {
-          "type": "string"
-        },
-        "latitude": {
-          "type": "integer"
-        },
-        "longitude": {
-          "type": "integer"
-        }
-      },
-      "required": [
-        "q"
-      ]
-    },
     "ApiResponse": {
       "type": "object",
       "properties": {
@@ -109,7 +113,7 @@
           "format": "int32"
         },
         "type": {
-          "type": "object"
+          "type": "string"
         },
         "message": {
           "type": "string"
